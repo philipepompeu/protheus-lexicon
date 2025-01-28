@@ -19,14 +19,20 @@
             </template>
   
             <template v-slot:[`item.id`]="{ item }">
-              <v-tooltip bottom>
+              <router-link :to="`/fields/${item.id}`" class="text-decoration-none">
+                <v-chip color="primary" text-color="white">
+                  {{ item.id }}
+                </v-chip>
+              </router-link>
+
+              <!--<v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-chip v-bind="attrs" v-on="on" color="primary" text-color="white">
                     {{ item.id }}
                   </v-chip>
                 </template>
                 <span>ID da Tabela: {{ item.id }}</span>
-              </v-tooltip>
+              </v-tooltip>-->
             </template>
   
             <template v-slot:[`item.primaryKey`]="{ item }">
@@ -49,9 +55,9 @@
         tables: [],
         loading: true,
         headers: [
-          { text: 'ID', align: 'start', key: 'id', sortable: true },
-          { text: 'DescriÁ„o', value: 'description', sortable: true },
-          { text: 'Chave Prim·ria', value: 'primaryKey' },
+          { title: 'ID', align: 'start', key: 'id', sortable: true },
+          { title: 'Descri√ß√£o', key: 'description', sortable: true },
+          { title: 'Chave Prim√°ria', key: 'primaryKey' },
         ],
       };
     },
