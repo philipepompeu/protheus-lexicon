@@ -5,20 +5,19 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>
-        <TablesList />
+      <v-container>        
+        <RouterView />
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import TablesList from './components/TablesList';
 
 export default {
   name: "App",
   components: {
-    TablesList,
+    
   },
 };
 </script>

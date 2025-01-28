@@ -44,17 +44,19 @@
           { title: "Tipo", key: "type" },
           { title: "Tamanho", key: "size" },
           { title: "Decimais", key: "decimal" },
-          { title: "Título", key: "title" },
-          { title: "Descrição", key: "description" },
-          { title: "Validação", key: "valid" },
-          { title: "Inicialização", key: "init" },
-          { title: "Condição", key: "when" },
+          { title: "TÃ­tulo", key: "title" },
+          { title: "DescriÃ§Ã£o", key: "description" },
+          { title: "ValidaÃ§Ã£o", key: "valid" },
+          { title: "InicializaÃ§Ã£o", key: "init" },
+          { title: "CondiÃ§Ã£o", key: "when" },
         ],
       };
     },
     mounted() {
+      console.log('Componente TableFields montado');
       this.fetchFields();
     },
+    watch:{tableId: "fetchFields"},// Observe mudanï¿½as no parï¿½metro tableId     
     methods: {
       async fetchFields() {
         try {
