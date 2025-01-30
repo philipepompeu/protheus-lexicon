@@ -1,15 +1,17 @@
-export const tableService = {
-    // Mock para simular a resposta da API
-    getTables() {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([
-            { id: 'CN9', description: 'Contratos', primaryKey: 'CN9_FILIAL+CN9_NUMERO+CN9_REVISA' },
-            { id: 'CNA', description: 'Planilhas', primaryKey: 'CNA_FILIAL+CNA_CONTRA+CNA_REVISA+CNA_NUMERO' }
-            // Adicione outras tabelas conforme necessário
-          ]);
-        }, 1000); // Simula um delay de 1 segundo (como se fosse uma requisição)
-      });
-    },
-  };
-  
+import axios from 'axios';
+
+const API_URL = 'http://localhost:8080/tables';
+
+const tableService = {
+  async getTables(page = 0, size = 10, sort = 'description,asc') {
+    try {
+      const response = await axios.get(API_URL, { params: { page, size, sort } });
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar tabelas:', error);
+      throw error;
+    }
+  }
+};
+
+export default tableService;

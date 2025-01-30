@@ -6,9 +6,13 @@
           Carregando tabelas...
         </v-col>
         <v-col v-else cols="12">
-          <v-data-table
+          <v-data-table-server
+            v-model:items-per-page="itemsPerPage"
+            :items-length="totalItems"
             :headers="headers"
             :items="tables"
+            :loading="loading"
+            @update:options="fetchTables"
             item-value="id"
             class="elevation-1"
           >
@@ -41,14 +45,14 @@
               <span>{{ item.primaryKey }}</span>
             </template>
   
-          </v-data-table>
+          </v-data-table-server>
         </v-col>
       </v-row>
     </v-container>
   </template>
   
   <script>
-  import { tableService } from '../services/tableService';
+  import  tableService from '../services/tableService';
   
   export default {
     name: 'TablesList',
@@ -56,6 +60,9 @@
       return {
         tables: [],
         loading: true,
+        totalItems: 0,
+        //page:0,
+        itemsPerPage: 10,
         headers: [
           { title: 'ID', align: 'start', key: 'id', sortable: true },
           { title: 'Descrição', key: 'description', sortable: true },
@@ -64,13 +71,16 @@
       };
     },
     mounted() {
-      console.log('Componente TableList montado');
-      this.fetchTables();
+      
+      this.fetchTables({page:1, itemsPerPage:10});
     },
     methods: {
-      async fetchTables() {
-        try {
-          this.tables = await tableService.getTables();
+      async fetchTables({ page, itemsPerPage }) {
+        try {          
+          
+          const response = await tableService.getTables(page - 1, itemsPerPage);
+          this.tables = response.content;          
+          this.totalItems = response.totalElements;
         } catch (error) {
           console.error('Erro ao carregar tabelas:', error);
         } finally {
