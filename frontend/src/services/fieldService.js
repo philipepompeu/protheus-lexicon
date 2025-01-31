@@ -1,35 +1,17 @@
-export const fieldService = {
-    async getFields(tableId) {
-      // Simula um delay para carregar os dados (ex.: chamada de API)
-      console.log(tableId);
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([
-            {
-              field: "CN9_FILIAL",
-              type: "C",
-              size: 8,
-              decimal: 0,
-              title: "Filial",
-              description: "Filial do Sistema",
-              valid: "",
-              init: "",
-              when: "",
-            },
-            {
-              field: "CN9_NUMERO",
-              type: "C",
-              size: 8,
-              decimal: 0,
-              title: "Número",
-              description: "Número do Contrato",
-              valid: "",
-              init: "",
-              when: "",
-            },
-          ]);
-        }, 500); // Simula 500ms de delay
-      });
-    },
-  };
-  
+import axios from 'axios';
+
+const API_BASE_URL = 'http://localhost:8080'; // Atualize se necessário
+
+const fieldService = {
+  async getFields(tableId) {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/tables/${tableId}/fields`);
+      return response.data; // Retorna os campos da tabela específica
+    } catch (error) {
+      console.error('Erro ao buscar os campos da tabela:', error);
+      throw error;
+    }
+  }
+};
+
+export default fieldService;

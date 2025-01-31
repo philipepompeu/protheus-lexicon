@@ -8,6 +8,7 @@
         <v-col v-else cols="12">
           <v-data-table-server
             v-model:items-per-page="itemsPerPage"
+            :search="filterById"
             :items-length="totalItems"
             :headers="headers"
             :items="tables"
@@ -44,6 +45,14 @@
             <template v-slot:[`item.primaryKey`]="{ item }">
               <span>{{ item.primaryKey }}</span>
             </template>
+
+            <template v-slot:tfoot>
+              <tr>
+                <td>
+                  <v-text-field v-model="filterById" class="ma-2" density="compact" placeholder="Buscar tabela..." hide-details></v-text-field>
+                </td>                
+              </tr>
+            </template>
   
           </v-data-table-server>
         </v-col>
@@ -68,6 +77,7 @@
           { title: 'Descrição', key: 'description', sortable: true },
           { title: 'Chave Primária', key: 'primaryKey' },
         ],
+        filterById: ''
       };
     },
     mounted() {
@@ -78,7 +88,7 @@
       async fetchTables({ page, itemsPerPage }) {
         try {          
           
-          const response = await tableService.getTables(page - 1, itemsPerPage);
+          const response = await tableService.getTables(page - 1, itemsPerPage, null,this.filterById);
           this.tables = response.content;          
           this.totalItems = response.totalElements;
         } catch (error) {

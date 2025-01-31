@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.philipepompeu.protheus_lexicon_backend.repository.TableEntity;
@@ -24,7 +26,12 @@ public class TableService {
         return repository.findAll();
     }
 
-    public Page<TableEntity> getTables(Pageable pageable) {
+    public Page<TableEntity> getTables(int page, int size, String id) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        
+        if (id != null && !id.isEmpty()) {
+            return repository.findByIdContainingIgnoreCase(id, pageable);
+        }
         return repository.findAllByOrderById(pageable);
     }
 }

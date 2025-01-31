@@ -4,9 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "SX2T10")
+@Getter
+@Setter
 public class TableEntity {
 
 
@@ -19,27 +23,5 @@ public class TableEntity {
 
     @Column(name = "X2_UNICO", nullable = false, length = 255)
     private String primaryKey;
-    
-    
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    
-    public String getPrimaryKey() {
-        return primaryKey;
-    }
-    public void setPrimaryKey(String primaryKey) {
-        this.primaryKey = primaryKey;
-    }
 
 }

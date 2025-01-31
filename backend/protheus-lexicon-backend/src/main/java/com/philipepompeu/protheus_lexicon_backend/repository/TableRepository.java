@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TableRepository extends JpaRepository<TableEntity, String>{
 
     Page<TableEntity> findAllByOrderById(Pageable pageable);
+    Page<TableEntity> findByIdContainingIgnoreCase(String chave, Pageable pageable);
     
 }

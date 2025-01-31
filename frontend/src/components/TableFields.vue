@@ -25,7 +25,7 @@
   </template>
   
   <script>
-  import { fieldService } from "../services/fieldService";
+  import fieldService  from "../services/fieldService";
   
   export default {
     name: "TableFields",
@@ -56,7 +56,7 @@
       console.log('Componente TableFields montado');
       this.fetchFields();
     },
-    watch:{tableId: "fetchFields"},// Observe mudan�as no par�metro tableId     
+    watch:{tableId: "fetchFields"},
     methods: {
       async fetchFields() {
         try {
