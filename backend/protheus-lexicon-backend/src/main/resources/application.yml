@@ -1,13 +1,13 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb  # Usa um banco em memÛria para testes
+    url: jdbc:h2:mem:testdb  # Usa um banco em mem√≥ria para testes
     driver-class-name: org.h2.Driver
     username: sa
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: none  # Evita a criaÁ„o autom·tica de tabelas
+      ddl-auto: none  # Evita a cria√ß√£o autom√°tica de tabelas
   sql:
     init:
       mode: never
