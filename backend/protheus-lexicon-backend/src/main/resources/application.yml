@@ -1,13 +1,12 @@
 spring:
+  profiles:
+    active: dev # Define o perfil padrão como 'dev'
   datasource:
-    url: jdbc:h2:mem:testdb  # Usa um banco em memória para testes
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:postgresql://localhost:5432/P1212410MNTDBEXP
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 123
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none  # Evita a criação automática de tabelas
-  sql:
-    init:
-      mode: never
+      ddl-auto: update
