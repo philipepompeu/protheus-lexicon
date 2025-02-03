@@ -1,0 +1,33 @@
+name: CI - Build e Testes Automatizados
+
+on:
+  push:
+    branches:
+      - main  # Roda a pipeline sempre que houver commit na branch main
+      - develop  # Também pode rodar na develop (se quiser)
+  pull_request:
+    branches:
+      - main  # Roda nos PRs para a main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Instalar dependências
+        working-directory: backend/protheus-lexicon-backend
+        run: mvn install --no-transfer-progress --quiet
+
+      - name: Rodar testes automatizados
+        working-directory: backend/protheus-lexicon-backend
+        run: mvn test

@@ -1,9 +1,9 @@
-package com.philipepompeu.protheus_lexicon_backend.service;
+package com.philipepompeu.protheus_lexicon_backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 
 import com.philipepompeu.protheus_lexicon_backend.repository.FieldEntity;
-import com.philipepompeu.protheus_lexicon_backend.repository.FieldRepository;
+import com.philipepompeu.protheus_lexicon_backend.service.FieldService;
 
 import org.springframework.http.ResponseEntity;
 import java.util.List;
@@ -12,15 +12,15 @@ import java.util.List;
 @RequestMapping("/tables/{tableId}/fields")
 public class FieldController {
 
-    private final FieldRepository fieldRepository;
+    private final FieldService fieldService;
 
-    public FieldController(FieldRepository fieldRepository) {
-        this.fieldRepository = fieldRepository;
+    public FieldController(FieldService fieldService) {
+        this.fieldService = fieldService;
     }
 
     @GetMapping
     public ResponseEntity<List<FieldEntity>> getFieldsByTable(@PathVariable String tableId) {
-        List<FieldEntity> fields = fieldRepository.findByTable_IdOrderBySequence(tableId);
+        List<FieldEntity> fields = fieldService.getFieldsByTableId(tableId);
         if (fields.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

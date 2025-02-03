@@ -14,6 +14,14 @@ import lombok.Setter;
 public class TableEntity {
 
 
+    public TableEntity() {
+    }
+    public TableEntity(String id, String description, String primaryKey) {
+        this.id = id;
+        this.description = description;
+        this.primaryKey = primaryKey;
+    }
+
     @Id
     @Column(name = "X2_CHAVE", nullable = false, length = 50)
     private String id;
