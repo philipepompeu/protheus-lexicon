@@ -28,8 +28,6 @@ public class FieldServiceTest {
     @InjectMocks
     private FieldService fieldService;
 
-    //private final ObjectMapper objectMapper = new ObjectMapper(); // Instùncia do ObjectMapper
-
     @Test
     public void testGetFieldsByTableId() throws JsonMappingException, JsonProcessingException {
 
@@ -46,10 +44,10 @@ public class FieldServiceTest {
         
         when(fieldRepository.findByTable_IdOrderBySequence("CNA")).thenReturn(mockFields);
 
-        // Chamando o serviÁo
+        // Chamando o servi√ßo
         List<FieldEntity> result = fieldService.getFieldsByTableId("CNA");
 
-        // Verificando se os dados retornados s„o os esperados
+        // Verificando se os dados retornados sƒÉo os esperados
         assertEquals(1, result.size());
         assertEquals("CNA_CONTRA", result.get(0).getField());
     }
