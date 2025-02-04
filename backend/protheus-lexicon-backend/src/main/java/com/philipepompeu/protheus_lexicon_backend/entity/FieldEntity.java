@@ -1,4 +1,7 @@
-package com.philipepompeu.protheus_lexicon_backend.repository;
+package com.philipepompeu.protheus_lexicon_backend.entity;
+
+import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.SQLRestriction;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +14,8 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "SX3T10") // Exemplo: Tabela de campos no Protheus
+@SQLRestriction("D_E_L_E_T_ = ' '")
+@Immutable
 @Getter
 @Setter
 public class FieldEntity {

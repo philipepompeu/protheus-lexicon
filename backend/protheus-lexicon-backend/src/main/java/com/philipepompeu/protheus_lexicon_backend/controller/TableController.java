@@ -9,15 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.philipepompeu.protheus_lexicon_backend.repository.TableEntity;
+import com.philipepompeu.protheus_lexicon_backend.entity.TableEntity;
 import com.philipepompeu.protheus_lexicon_backend.service.TableService;
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/tables")
-@Tag(name = "Tabelas", description = "Consulta o SX2 do Protheus")
+@Tag(   name = "Tabelas", 
+        description = "Consulta o SX2 do Protheus",
+        externalDocs = @ExternalDocumentation( description="SX2 - Tabelas de Dados", url="https://tdn.totvs.com/display/public/framework/SX2+-+Tabelas+de+Dados"))
 public class TableController {
 
     @Autowired

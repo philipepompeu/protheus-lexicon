@@ -2,14 +2,20 @@ package com.philipepompeu.protheus_lexicon_backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.philipepompeu.protheus_lexicon_backend.repository.FieldEntity;
+import com.philipepompeu.protheus_lexicon_backend.entity.FieldEntity;
 import com.philipepompeu.protheus_lexicon_backend.service.FieldService;
+
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @RestController
 @RequestMapping("/tables/{tableId}/fields")
+@Tag(   name = "Campos", 
+        description = "Consulta o SX3 do Protheus",
+        externalDocs = @ExternalDocumentation( description="SX3 - Campos das tabelas", url="https://tdn.totvs.com/display/public/framework/SX3+-+Campos+das+tabelas"))
 public class FieldController {
 
     private final FieldService fieldService;
