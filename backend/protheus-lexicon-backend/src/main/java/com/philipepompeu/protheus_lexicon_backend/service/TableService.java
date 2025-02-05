@@ -1,6 +1,7 @@
 package com.philipepompeu.protheus_lexicon_backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,5 +34,9 @@ public class TableService {
             return repository.findByIdContainingIgnoreCase(id, pageable);
         }
         return repository.findAllByOrderById(pageable);
+    }
+
+    public Optional<TableEntity> getTableById(String tableId) {
+        return repository.findById(tableId);
     }
 }

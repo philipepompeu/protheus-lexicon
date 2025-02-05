@@ -1,10 +1,13 @@
 package com.philipepompeu.protheus_lexicon_backend.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +42,17 @@ public class TableController {
     ) {
         Page<TableEntity> tables = service.getTables(page, size, id);
         return ResponseEntity.ok(tables);
+    }
+
+    @GetMapping("/{tableId}")
+    @Operation(summary = "Obtêm os dados de uma única tabela do SX2")
+    public ResponseEntity<TableEntity> getTableById(@PathVariable String tableId) {
+        Optional<TableEntity> table = service.getTableById(tableId);
+        
+        if (table.isPresent()) {
+            return ResponseEntity.ok(table.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 }

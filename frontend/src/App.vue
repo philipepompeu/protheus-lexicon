@@ -5,11 +5,15 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>        
+      <v-container>   
+        <v-alert v-if="errorMessage" type="error" dense dismissible>
+          {{ errorMessage }}
+        </v-alert>
+
         <RouterView />
       </v-container>
     </v-main>
-    <!-- Rodap� -->
+    <!-- Rodapé -->
     <v-footer app class="bg-grey-lighten-3 text-center">
       <v-container>
         <v-row justify="center">
@@ -30,5 +34,15 @@ export default {
   components: {
     
   },
+  data() {
+    return {
+      errorMessage: ''
+    };
+  },
+  methods: {
+    handleError(error) {
+      this.errorMessage = error.message;
+    }
+  }
 };
 </script>

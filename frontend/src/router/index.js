@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import TablesList from '@/components/TablesList.vue';
-import TableFields from '@/components/TableFields.vue';
+import TableDetails from '@/components/TableDetails.vue';
 import DatabaseConfigForm from '@/components/DatabaseConfigForm.vue';
 
 const routes = [ 
   {
-    path: '/fields/:tableId',
-    name: 'TableFields',
-    component: TableFields, // Página com os campos da tabela selecionada
+    path: '/tables/:tableId',
+    name: 'TableDetails',
+    component: TableDetails, // Página com os campos da tabela selecionada
     props: true, // Permite que o parâmetro `tableId` seja passado como prop para o componente
   },
   { path: '/configure', component: DatabaseConfigForm },

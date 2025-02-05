@@ -56,7 +56,10 @@
       console.log('Componente TableFields montado');
       this.fetchFields();
     },
-    watch:{tableId: "fetchFields"},
+    setup(props) {
+      console.log('Table ID recebido:', props.tableId);
+    },
+    watch: {tableId: "fetchFields"},
     methods: {
       async fetchFields() {
         try {
@@ -64,6 +67,7 @@
           this.fields = await fieldService.getFields(this.tableId);
         } catch (error) {
           console.error("Erro ao carregar os campos:", error);
+          this.$emit('error', error);
         } finally {
           this.loading = false; // Conclui o carregamento
         }

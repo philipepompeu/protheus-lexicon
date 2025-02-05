@@ -24,7 +24,7 @@
             </template>
   
             <template v-slot:[`item.id`]="{ item }">
-              <router-link :to="`/fields/${item.id}`" class="text-decoration-none">
+              <router-link :to="`/tables/${item.id}`" class="text-decoration-none">
 
                 <v-chip color="primary" text-color="white">
                   {{ item.id }}
@@ -93,6 +93,7 @@
           this.totalItems = response.totalElements;
         } catch (error) {
           console.error('Erro ao carregar tabelas:', error);
+          this.$emit('error', error);
         } finally {
           this.loading = false;
         }

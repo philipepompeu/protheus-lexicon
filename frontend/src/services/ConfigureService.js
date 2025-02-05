@@ -1,9 +1,9 @@
 class ConfigureService {
     static async saveConfig(config) {
       return new Promise((resolve) => {
-        console.log('Configuração recebida:', config);
+        console.log('ConfiguraÃ§Ã£o recebida:', config);
         setTimeout(() => {
-          resolve({ data: 'Configuração salva com sucesso!' });
+          resolve({ data: 'ConfiguraÃ§Ã£o salva com sucesso!' });
         }, 500);
       });
     }

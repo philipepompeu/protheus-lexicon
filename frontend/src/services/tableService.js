@@ -1,16 +1,24 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:8080/tables';
+import api from './apiService';
 
 const tableService = {
   async getTables(page = 0, size = 10, sort = 'description,asc', filterById="") {
-    try {
-      const response = await axios.get(API_URL, { params: { page, size, sort , id:filterById } });
+    try {      
+      const response = await api.get('/tables', { params: { page, size, sort , id:filterById } });
       return response.data;
     } catch (error) {
       console.error('Erro ao buscar tabelas:', error);
       throw error;
     }
+  },
+  
+  async getTableById(tableId) {
+    const response = await api.get(`tables/${tableId}`);
+    return response.data;
+  },
+
+  async getTableIndexes(tableId){
+    const response = await api.get(`tables/${tableId}/indexes`);
+    return response.data;
   }
 };
 
