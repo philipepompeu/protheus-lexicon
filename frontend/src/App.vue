@@ -1,3 +1,7 @@
+<script setup>
+  import { apiError } from '@/services/apiService';
+</script>
+
 <template>
   <v-app>
     <v-app-bar app>
@@ -5,9 +9,16 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>   
-        <v-alert v-if="errorMessage" type="error" dense dismissible>
-          {{ errorMessage }}
+      <v-container>
+        <!-- Alerta de erro global da API -->
+        <v-alert
+          v-if="apiError"
+          type="error"
+          dense dismissible
+          closable
+          @click:close="apiError = null"
+        >
+          {{ apiError }}
         </v-alert>
 
         <RouterView />

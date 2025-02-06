@@ -1,21 +1,23 @@
 // src/services/apiService.js
 import axios from 'axios';
 import { API_URL } from '@/config';
+import { ref } from 'vue';
+
+// Criar um estado global para erro da API
+export const apiError = ref(null);
 
 const api = axios.create({
   baseURL: API_URL,
-  timeout: 5000 // Define um tempo limite para requisiÁıes
+  timeout: 5000 // Define um tempo limite para requisi—É—àes
 });
 
 // Interceptor para capturar erros e tratar quando a API estiver offline
 api.interceptors.response.use(
   response => response,
   error => {
-    if (!error.response) {
-      console.error('Erro: API offline ou inacessÌvel');
-      throw new Error('A API est· offline. Tente novamente mais tarde.');
-    }
-    return Promise.reject(error);
+    console.log(error);
+    apiError.value = 'Erro ao conectar √† API. Verifique se o servidor est√° online.';
+    return Promise.resolve(null); // Retorna null ao inv√©s de propagar erro
   }
 );
 
