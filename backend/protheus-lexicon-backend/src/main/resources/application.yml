@@ -2,7 +2,7 @@ spring:
   profiles:
     active: dev # Define o perfil padrão como 'dev'
   datasource:
-    url: jdbc:postgresql://localhost:5432/P1212410MNTDBEXP
+    url: jdbc:postgresql://localhost:5432/protheuslexicon
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: 123
