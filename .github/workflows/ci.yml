@@ -23,6 +23,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'maven'
+      
+      - name: Set environment variables for Docker
+        run: echo "SPRING_PROFILES_ACTIVE=docker" >> $GITHUB_ENV
 
       - name: Instalar dependências
         working-directory: backend/protheus-lexicon-backend
