@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import TablesList from '@/components/TablesList.vue';
+import ParametersList from '@/components/ParametersList.vue';
 import TableDetails from '@/components/TableDetails.vue';
 import DatabaseConfigForm from '@/components/DatabaseConfigForm.vue';
 
@@ -11,6 +12,7 @@ const routes = [
     props: true, // Permite que o parâmetro `tableId` seja passado como prop para o componente
   },
   { path: '/configure', component: DatabaseConfigForm },
+  { path: '/parameters', component: ParametersList },
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',

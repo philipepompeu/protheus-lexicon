@@ -3,9 +3,9 @@
       <v-row>
         <v-col cols="12" class="text-center">
           <v-icon large>mdi-alert-circle</v-icon>
-          <h1>P·gina N„o Encontrada</h1>
-          <p>Desculpe, a p·gina que vocÍ procurou n„o existe ou n„o foi encontrada.</p>
-          <v-btn color="primary" @click="goHome">Voltar para a p·gina inicial</v-btn>
+          <h1>P√°gina N√£o Encontrada</h1>
+          <p>Desculpe, a p√°gina que voc√™ procurou n√£o existe ou n√£o foi encontrada.</p>
+          <v-btn color="primary" @click="goHome">Voltar para a p√°gina inicial</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -16,7 +16,7 @@
     name: "NotFound",
     methods: {
       goHome() {
-        this.$router.push('/'); // Navega de volta para a p·gina inicial
+        this.$router.push('/'); // Navega de volta para a p√°gina inicial
       },
     },
   };

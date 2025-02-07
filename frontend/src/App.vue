@@ -4,9 +4,17 @@
 
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title><router-link :to="`/`" class="text-decoration-none">Protheus Lexicon</router-link></v-toolbar-title>
-    </v-app-bar>
+    <v-toolbar app color="primary" dark>
+      <v-toolbar-title>
+        <router-link to="/" class="text-decoration-none text-white">Protheus Lexicon</router-link>
+      </v-toolbar-title>
+      
+      <v-spacer></v-spacer>
+
+      <v-btn text to="/">Tabelas (SX3)</v-btn>
+      <v-btn text to="/parameters">Parâmetros (SX6)</v-btn>
+      <v-btn text to="/questions">Perguntas (SX1)</v-btn>
+    </v-toolbar>
 
     <v-main>
       <v-container>
