@@ -16,7 +16,7 @@ services:
 
   backend:
     build:
-      context: ./backend/protheus-lexicon-backend
+      context: .
       dockerfile: Dockerfile
     container_name: protheus-backend
     depends_on:
