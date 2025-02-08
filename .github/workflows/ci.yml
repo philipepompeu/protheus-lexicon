@@ -36,6 +36,9 @@ jobs:
           java-version: '17'
           cache: 'maven'
       
+      - name: Instalar Docker Compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
+
       - name: Subir containers com Docker Compose
         run: docker-compose -f backend/protheus-lexicon-backend/docker-compose.yml up -d
 
