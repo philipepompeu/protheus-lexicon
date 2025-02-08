@@ -27,8 +27,8 @@ public class MultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMu
 
     @Override
     protected DataSource selectDataSource(String tenantIdentifier) {
-        // Aqui você pode buscar o DataSource correspondente ao tenantIdentifier
-        // Por exemplo, carregar dinâmicamente com base em um mapa ou banco de dados        
+        // Aqui vocÃª pode buscar o DataSource correspondente ao tenantIdentifier
+        // Por exemplo, carregar dinÃ¢micamente com base em um mapa ou banco de dados        
         System.out.println(String.format("tenantId selecionado:[ %s ]", (String) tenantIdentifier));
         return defaultDataSource; // Exemplo: Retornando o mesmo DataSource para todos os tenants
     }

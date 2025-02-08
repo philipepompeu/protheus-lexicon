@@ -80,7 +80,7 @@ public class DataSourceConfig {
 
         Map<String, Object> properties = new HashMap<>();        
         
-        //properties.put("hibernate.multiTenancy", "SCHEMA"); // Certifique-se de que essa configuraÁ„o seja necess·ria
+        //properties.put("hibernate.multiTenancy", "SCHEMA"); // Certifique-se de que essa configura–∑–≥o seja necess–±ria
         properties.put("hibernate.tenant_identifier_resolver", multiTenantConnectionProvider);
         properties.put("hibernate.multi_tenant_connection_provider", tenantIdentifierResolver);
         em.setJpaPropertyMap(properties);
