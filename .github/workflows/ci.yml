@@ -52,7 +52,7 @@ jobs:
       - name: Instalar dependências
         working-directory: backend/protheus-lexicon-backend
         run: mvn install --no-transfer-progress --quiet -Dspring.profiles.active=ci
-
+    
       - name: Rodar testes automatizados
         working-directory: backend/protheus-lexicon-backend
         run: mvn test -Dspring.profiles.active=ci
