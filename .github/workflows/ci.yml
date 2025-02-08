@@ -8,7 +8,19 @@ on:
   pull_request:
     branches:
       - main  # Roda nos PRs para a main
-
+#services:
+#  postgres:
+#    image: postgres:15
+#    env:
+#      POSTGRES_DB: protheuslexicon
+#      POSTGRES_USER: admin
+#      POSTGRES_PASSWORD: admin
+#    ports:
+#      - "5432:5432"
+#env:
+#  DB_HOST: localhost
+ # DB_USER: admin
+#  DB_PASSWORD: admin
 jobs:
   backend-build-and-test:
     runs-on: ubuntu-latest
@@ -24,8 +36,15 @@ jobs:
           java-version: '17'
           cache: 'maven'
       
-      - name: Set environment variables for Docker
-        run: echo "SPRING_PROFILES_ACTIVE=ci" >> $GITHUB_ENV
+      - name: Subir containers com Docker Compose
+        run: docker-compose -f backend/protheus-lexicon-backend/docker-compose.yml up -d
+
+      - name: Aguardar PostgreSQL iniciar
+        run: sleep 15
+
+      - name: Testar conexão com PostgreSQL
+        run: |
+          pg_isready -h localhost -p 5432 -U admin
 
       - name: Instalar dependências
         working-directory: backend/protheus-lexicon-backend

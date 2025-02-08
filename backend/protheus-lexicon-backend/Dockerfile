@@ -1,14 +1,14 @@
 # Usa a imagem do OpenJDK 17 como base
 FROM openjdk:17-jdk-slim
 
-# Define o diretÛrio de trabalho dentro do container
+# Define o diret—Ério de trabalho dentro do container
 WORKDIR /app
 
 # Copia o arquivo JAR gerado pelo Maven
 COPY target/protheus-lexicon-backend.jar app.jar
 
-# Expıe a porta da aplicaÁ„o
+# Exp—Öe a porta da aplica–∑–≥o
 EXPOSE 8080
 
-# Comando para rodar a aplicaÁ„o
+# Comando para rodar a aplica–∑–≥o
 ENTRYPOINT ["java", "-jar", "app.jar"]
