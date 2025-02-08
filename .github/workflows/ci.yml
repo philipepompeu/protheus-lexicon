@@ -25,7 +25,7 @@ jobs:
           cache: 'maven'
       
       - name: Set environment variables for Docker
-        run: echo "SPRING_PROFILES_ACTIVE=docker" >> $GITHUB_ENV
+        run: echo "SPRING_PROFILES_ACTIVE=ci" >> $GITHUB_ENV
 
       - name: Instalar dependências
         working-directory: backend/protheus-lexicon-backend
