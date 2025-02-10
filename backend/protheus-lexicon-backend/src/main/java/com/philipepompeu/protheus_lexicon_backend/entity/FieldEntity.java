@@ -36,7 +36,7 @@ public class FieldEntity {
     @Column(name = "X3_TITULO")
     private String title;
 
-    @Column(name = "X3_DESCRICAO")
+    @Column(name = "X3_DESCRIC")
     private String description;
     
     @Column(name = "X3_VALID")

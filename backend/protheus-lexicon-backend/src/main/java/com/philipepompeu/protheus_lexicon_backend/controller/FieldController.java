@@ -32,4 +32,11 @@ public class FieldController {
         }
         return ResponseEntity.ok(fields);
     }
+
+    @GetMapping("/{fieldName}")
+    public ResponseEntity<FieldEntity> getFieldByName(@PathVariable String tableId, @PathVariable String fieldName) {
+        return fieldService.getFieldByName(fieldName)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
