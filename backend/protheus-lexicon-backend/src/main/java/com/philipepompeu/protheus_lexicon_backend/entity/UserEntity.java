@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users", schema = "application") // Nome da tabela no banco de dados
@@ -21,8 +22,8 @@ import java.util.List;
 public class UserEntity implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO) // Deixa o próprio banco gerar o UUID
+    private UUID id;
 
     @Column(unique = true, nullable = false)
     private String username;

@@ -33,12 +33,19 @@ public class SecurityConfig {
     CustomUserDetailsService customUserDetailsService;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {        
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
+        
+        String[] swaggerPattern = { "/swagger-ui.html",
+                                    "/v3/api-docs/**",
+                                    "/v3/api-docs.yaml",
+                                    "/swagger-ui/**",
+                                    "/swagger-ui/index.html",
+                                    "/swagger-ui/**"};
         http
         .csrf(csrf -> csrf.disable()) // Desabilita CSRF para facilitar testes com Postman
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
-        .requestMatchers("/swagger-ui/**", "/swagger-ui/index.html").permitAll()
+        .requestMatchers(swaggerPattern).permitAll()
         .requestMatchers(HttpMethod.POST, "/auth/login","/auth/register","/auth/**","/swagger-ui/**", "/swagger-ui.html").permitAll()
         .anyRequest().authenticated()
         ).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

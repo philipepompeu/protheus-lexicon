@@ -1,5 +1,7 @@
 package com.philipepompeu.protheus_lexicon_backend.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,12 +36,6 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;    
 
-    /*@Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private CustomUserDetailsService userDetailsService;*/
-    
-
     @PostMapping("/login")
     @Operation(summary = "Realiza a autenticação do usuário")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest request) {                
@@ -54,14 +50,22 @@ public class AuthController {
                                                     .orElseThrow(()->new UsernameNotFoundException("Erro: Credenciais inválidas!"));
 
             
-            if (passwordEncoder.matches(user.getPassword(), request.getPassword())) {
+
+            System.out.println(String.format("user.getPassword() = %s / request.getPassword() = %s",user.getPassword(),this.passwordEncoder.encode(request.getPassword()) ));        
+            
+            
+            
+            if (this.passwordEncoder.matches(request.getPassword(), user.getPassword())) {
                 String token = tokenService.generateToken(user);                
                 return ResponseEntity.ok(new AuthResponse(user.getUsername(), token));
+            }else{
+                System.out.println("passwordEncoder-> not match");
             }    
 
             return ResponseEntity.badRequest().build();
         } catch (UsernameNotFoundException e) {
             
+            System.out.println("UserNotFound>"+e.getMessage());
             return ResponseEntity.status(401).body(null);
         }
     }
@@ -70,17 +74,22 @@ public class AuthController {
     @Operation(summary = "Realiza a criação do usuário")
     public ResponseEntity<AuthResponse> register(@RequestBody AuthRequest request) {       
 
-        System.out.println(request.toString());
+        Optional<UserEntity> foundUser = this.userRepository.findByUsername(request.getUsername());
 
-        UserEntity newUser = new UserEntity();
-        newUser.setUsername(request.getUsername());      
-        
-        newUser.setPassword(this.passwordEncoder.encode(request.getPassword()));        
+        if (foundUser.isEmpty()) {
+            
+            UserEntity newUser = new UserEntity();
+            newUser.setUsername(request.getUsername());      
+            
+            newUser.setPassword(this.passwordEncoder.encode(request.getPassword()));        
+    
+            this.userRepository.save(newUser);
+            String token = tokenService.generateToken(newUser);                
+            
+            return ResponseEntity.ok(new AuthResponse(newUser.getUsername(), token));                                           
+        }
 
-        this.userRepository.save(newUser);
-        String token = tokenService.generateToken(newUser);                
-        
-        return ResponseEntity.ok(new AuthResponse(newUser.getUsername(), token));                                           
+        return ResponseEntity.badRequest().build();
         
     }
     

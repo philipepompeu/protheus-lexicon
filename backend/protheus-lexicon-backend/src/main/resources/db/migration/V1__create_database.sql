@@ -267,6 +267,15 @@ CREATE TABLE application.users (
     enabled BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT now()
 );
+INSERT INTO application.users (id, username, password, enabled, created_at)
+VALUES (
+    gen_random_uuid(),
+    'admin',
+    '$2a$10$NL5MBzjZKG6tL/HOdJzHA.Ur25F2wIkuykynZTfHBSnuvf5v3F.YS',
+    TRUE,
+    now()
+)
+ON CONFLICT (username) DO NOTHING;
 
 CREATE TABLE application.roles (
     id SERIAL PRIMARY KEY,
