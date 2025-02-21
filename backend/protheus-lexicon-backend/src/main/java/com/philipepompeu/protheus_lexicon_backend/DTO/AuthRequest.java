@@ -1,16 +1,21 @@
 package com.philipepompeu.protheus_lexicon_backend.DTO;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthRequest {
-
-    @Schema(description = "Nome de usu·rio", example = "admin")
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuthRequest/*(String username, String password)*/ {
+    
+    
+    @Schema(description = "Nome de usu√°rio", example = "admin")
     private String username;
 
-    @Schema(description = "Senha do usu·rio", example = "123456")
+    @Schema(description = "Senha do usu√°rio", example = "123456")
     private String password;    
 }

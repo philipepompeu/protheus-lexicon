@@ -20,22 +20,17 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEntity> user = userRepository.findByUsername(username);
+        UserEntity user = this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuário inválido."));
         
-        System.out.println(String.format("Tentativa de login do usuário: %s", user.get().getUsername())); 
-        if (user.isPresent()) {
-            org.springframework.security.core.userdetails.User userDetails = new org.springframework.security.core.userdetails.User(
-                user.get().getUsername(),
-                user.get().getPassword(),
-                new ArrayList<>()
-            );
-
-            return userDetails;            
-           
-        }
-
-        throw new UsernameNotFoundException("Usuário não encontrado: " + username);
+        System.out.println(String.format("Tentativa de login do usuário: %s", user.getUsername())); 
         
+        org.springframework.security.core.userdetails.User userDetails = new org.springframework.security.core.userdetails.User(
+            user.getUsername(),
+            user.getPassword(),
+            new ArrayList<>()
+        );
+
+        return userDetails;      
 
     }
 }
