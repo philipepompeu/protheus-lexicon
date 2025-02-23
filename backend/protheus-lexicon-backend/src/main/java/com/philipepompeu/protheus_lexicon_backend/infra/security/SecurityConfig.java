@@ -25,6 +25,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 
 @Configuration
@@ -36,6 +37,9 @@ public class SecurityConfig {
 
     @Autowired
     CustomUserDetailsService customUserDetailsService;
+
+    @Value("${api.security.cors.allowed.origin}")
+    private String allowedCorsOrigin;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
@@ -73,7 +77,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:8082")); // Permite o frontend Vue
+        configuration.setAllowedOrigins(List.of(allowedCorsOrigin)); // Permite o frontend Vue
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
