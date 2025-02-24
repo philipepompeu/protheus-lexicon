@@ -43,6 +43,29 @@ jobs:
       - name: Rodar testes automatizados
         working-directory: backend/protheus-lexicon-backend
         run: mvn test -Dspring.profiles.active=ci
+  publish-backend-image-to-dockerhub:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      - name: Instalar dependências
+        working-directory: backend/protheus-lexicon-backend
+        run: mvn clean install -DskipTests
+      - name: Login DockerHub
+        run: docker login -u {{secrets.docker_hub_username}} -p {{secrets.docker_hub_pwd}}
+      - name: Build imagem
+        run: docker build -t philipepompeu/protheus-lexicon-backend
+      - name: Publica imagem para DockerHub
+        run: docker push philipepompeu/protheus-lexicon-backend
+
   frontend-build-and-test:
     runs-on: ubuntu-latest
     defaults:
