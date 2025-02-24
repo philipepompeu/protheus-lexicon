@@ -60,7 +60,7 @@ jobs:
         working-directory: backend/protheus-lexicon-backend
         run: mvn clean install -DskipTests
       - name: Login DockerHub
-        run: docker login -u {{secrets.docker_hub_username}} -p {{secrets.docker_hub_pwd}}
+        run: docker login -u ${{secrets.docker_hub_username}} -p ${{secrets.docker_hub_pwd}}
       - name: Build imagem
         run: docker build -t philipepompeu/protheus-lexicon-backend
       - name: Publica imagem para DockerHub
