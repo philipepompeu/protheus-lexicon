@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copia o arquivo JAR gerado pelo Maven
-COPY target/protheus-lexicon-backend.jar app.jar
+COPY /target/protheus-lexicon-backend.jar app.jar
 
 # Expхe a porta da aplicaзгo
 EXPOSE 8080

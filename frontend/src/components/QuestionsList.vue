@@ -32,7 +32,7 @@
             :headers="headers"
             :items="questions"
             :loading="loading"
-            hover="true"
+            :hover="true"
             @update:options="fetchQuestions"
             item-value="id"
             class="elevation-1"

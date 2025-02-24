@@ -16,11 +16,16 @@ import com.philipepompeu.protheus_lexicon_backend.entity.TableEntity;
 import com.philipepompeu.protheus_lexicon_backend.service.TableService;
 
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/tables")
+@OpenAPIDefinition(info = @Info(
+    title = "API Protheus Lexicon", version = "1.0"
+))
 @Tag(   name = "Tabelas", 
         description = "Consulta o SX2 do Protheus",
         externalDocs = @ExternalDocumentation( description="SX2 - Tabelas de Dados", url="https://tdn.totvs.com/display/public/framework/SX2+-+Tabelas+de+Dados"))
