@@ -79,9 +79,7 @@ jobs:
 
     services:
       db:
-        image: postgres:15
-        container_name: protheus-db
-        restart: always
+        image: postgres:15        
         env:
           POSTGRES_DB: protheuslexicon
           POSTGRES_USER: admin
