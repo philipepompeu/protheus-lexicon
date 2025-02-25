@@ -62,8 +62,10 @@ jobs:
       - name: Login DockerHub
         run: docker login -u ${{secrets.docker_hub_username}} -p ${{secrets.docker_hub_pwd}}
       - name: Build imagem
+        working-directory: backend/protheus-lexicon-backend
         run: docker build . -t philipepompeu/protheus-lexicon-backend
       - name: Publica imagem para DockerHub
+        working-directory: backend/protheus-lexicon-backend
         run: docker push philipepompeu/protheus-lexicon-backend
 
   frontend-build-and-test:
