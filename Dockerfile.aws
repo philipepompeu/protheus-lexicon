@@ -1,14 +1,18 @@
-# Etapa 1: Clonar o repositório e buildar a aplicação
+# Etapa 1: Clonar o código do repositório já baixado e buildar o backend
 FROM maven:3.8.5-openjdk-17 AS builder
 
 WORKDIR /app
-RUN git clone https://github.com/philipepompeu/protheus-lexicon.git .
+COPY backend/protheus-lexicon-backend /app/backend
+
+WORKDIR /app/backend  # Agora estamos no diretório correto para rodar o Maven
 RUN mvn clean package -DskipTests
 
 # Etapa 2: Build do frontend
 FROM node:18 AS frontend-builder
-WORKDIR /app/frontend
-COPY --from=builder /app/frontend .
+WORKDIR /app
+COPY frontend /app/frontend
+
+WORKDIR /app/frontend  # Agora estamos no diretório correto para rodar o npm
 RUN npm install && npm run build
 
 # Etapa 3: Configurar o runtime do backend e frontend
@@ -16,7 +20,7 @@ FROM openjdk:17-jdk-slim AS final
 WORKDIR /app
 
 # Copia o backend
-COPY --from=builder /app/backend/protheus-lexicon-backend/target/protheus-lexicon-backend.jar app.jar
+COPY --from=builder /app/backend/target/protheus-lexicon-backend.jar app.jar
 
 # Copia o frontend para o diretório do Nginx
 COPY --from=frontend-builder /app/frontend/dist /usr/share/nginx/html
