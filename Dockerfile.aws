@@ -4,7 +4,8 @@ FROM maven:3.8.5-openjdk-17 AS builder
 WORKDIR /app
 COPY backend/protheus-lexicon-backend /app/backend
 
-WORKDIR /app/backend  # Agora estamos no diretório correto para rodar o Maven
+# Agora estamos no diretório correto para rodar o Maven
+WORKDIR /app/backend
 RUN mvn clean package -DskipTests
 
 # Etapa 2: Build do frontend
@@ -12,7 +13,8 @@ FROM node:18 AS frontend-builder
 WORKDIR /app
 COPY frontend /app/frontend
 
-WORKDIR /app/frontend  # Agora estamos no diretório correto para rodar o npm
+# Agora estamos no diretório correto para rodar o npm
+WORKDIR /app/frontend
 RUN npm install && npm run build
 
 # Etapa 3: Configurar o runtime do backend e frontend
