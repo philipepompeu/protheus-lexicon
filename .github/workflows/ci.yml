@@ -44,6 +44,7 @@ jobs:
         working-directory: backend/protheus-lexicon-backend
         run: mvn test -Dspring.profiles.active=ci
   publish-backend-image-to-dockerhub:
+    needs: backend-build-and-test
     runs-on: ubuntu-latest
 
     steps:
@@ -67,6 +68,34 @@ jobs:
       - name: Publica imagem para DockerHub
         working-directory: backend/protheus-lexicon-backend
         run: docker push philipepompeu/protheus-lexicon-backend
+  deploy-backend-to-aws:
+    needs: publish-backend-image-to-dockerhub
+    runs-on: self-hosted
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/protheuslexicon
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+      CORS_ALLOWED_ORIGIN: http://localhost
+
+    services:
+      db:
+        image: postgres:15
+        container_name: protheus-db
+        restart: always
+        env:
+          POSTGRES_DB: protheuslexicon
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+        #ports:
+        #  - "5432:5432"
+        volumes:
+          - pgdata:/var/lib/postgresql/data
+
+    steps:
+      - name: pull backend image from dockerhub
+        run: docker pull philipepompeu/protheus-lexicon-backend:latest
+      - name: run backend image
+        run: docker run -d -p 8080:8080 --name protheus-lexicon-backend philipepompeu/protheus-lexicon-backend:latest  
 
   frontend-build-and-test:
     runs-on: ubuntu-latest
