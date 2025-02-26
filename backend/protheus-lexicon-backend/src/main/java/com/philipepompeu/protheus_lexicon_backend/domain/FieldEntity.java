@@ -1,4 +1,4 @@
-package com.philipepompeu.protheus_lexicon_backend.entity;
+package com.philipepompeu.protheus_lexicon_backend.domain;
 
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.SQLRestriction;

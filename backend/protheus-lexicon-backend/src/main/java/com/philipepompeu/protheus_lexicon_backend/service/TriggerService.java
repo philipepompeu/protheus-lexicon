@@ -4,7 +4,7 @@ package com.philipepompeu.protheus_lexicon_backend.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.TriggerEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.TriggerEntity;
 import com.philipepompeu.protheus_lexicon_backend.repository.TriggerRepository;
 
 @Service

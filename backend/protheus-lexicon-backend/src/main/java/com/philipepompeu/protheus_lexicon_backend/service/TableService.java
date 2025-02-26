@@ -10,13 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.TableEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.TableEntity;
 import com.philipepompeu.protheus_lexicon_backend.repository.TableRepository;
 
 @Service
 public class TableService {
 
-    @Autowired
     private final TableRepository repository;
 
     public TableService(TableRepository repository) {

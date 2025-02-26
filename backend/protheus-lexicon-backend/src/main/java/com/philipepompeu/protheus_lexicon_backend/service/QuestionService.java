@@ -10,13 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.QuestionEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.QuestionEntity;
 import com.philipepompeu.protheus_lexicon_backend.repository.QuestionRepository;
 
 @Service
 public class QuestionService {
 
-    @Autowired
     private final QuestionRepository repository;
 
     public QuestionService(QuestionRepository repository) {

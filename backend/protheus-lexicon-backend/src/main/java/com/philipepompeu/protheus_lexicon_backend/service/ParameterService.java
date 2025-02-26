@@ -10,13 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.ParameterEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.ParameterEntity;
 import com.philipepompeu.protheus_lexicon_backend.repository.ParameterRepository;
 
 @Service
 public class ParameterService {
 
-    @Autowired
     private final ParameterRepository repository;
 
     public ParameterService(ParameterRepository repository) {

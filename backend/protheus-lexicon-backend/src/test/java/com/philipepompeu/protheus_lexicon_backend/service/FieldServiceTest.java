@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.philipepompeu.protheus_lexicon_backend.entity.FieldEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.FieldEntity;
 import com.philipepompeu.protheus_lexicon_backend.repository.FieldRepository;
 
 @SpringBootTest

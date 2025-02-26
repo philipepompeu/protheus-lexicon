@@ -2,7 +2,7 @@ package com.philipepompeu.protheus_lexicon_backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.IndexEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.IndexEntity;
 import com.philipepompeu.protheus_lexicon_backend.service.IndexService;
 
 import io.swagger.v3.oas.annotations.ExternalDocumentation;

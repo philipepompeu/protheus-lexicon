@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.UserEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.UserEntity;
 import com.philipepompeu.protheus_lexicon_backend.repository.UserRepository;
 
 import jakarta.servlet.FilterChain;
@@ -26,11 +26,14 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class SecurityFilter extends OncePerRequestFilter{
 
-    @Autowired
-    TokenService tokenService;
+    private final TokenService tokenService;
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public SecurityFilter(TokenService tokenService, UserRepository userRepository){
+        this.tokenService = tokenService;
+        this.userRepository = userRepository;
+    }
 
     private String recoverToken(HttpServletRequest request){
 

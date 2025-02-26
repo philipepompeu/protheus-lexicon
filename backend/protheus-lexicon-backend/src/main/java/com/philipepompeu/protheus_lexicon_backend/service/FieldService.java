@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.FieldEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.FieldEntity;
 import com.philipepompeu.protheus_lexicon_backend.repository.FieldRepository;
 
 @Service

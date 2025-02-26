@@ -32,14 +32,18 @@ import org.springframework.beans.factory.annotation.Value;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    SecurityFilter securityFilter;
+    private final SecurityFilter securityFilter;
 
-    @Autowired
-    CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Value("${api.security.cors.allowed.origin}")
     private String allowedCorsOrigin;
+
+    public SecurityConfig(  SecurityFilter securityFilter,
+                            CustomUserDetailsService customUserDetailsService){
+        this.securityFilter = securityFilter;
+        this.customUserDetailsService = customUserDetailsService;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 

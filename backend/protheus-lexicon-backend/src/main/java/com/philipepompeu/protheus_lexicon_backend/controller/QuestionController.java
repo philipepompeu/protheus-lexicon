@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.QuestionEntity;
-import com.philipepompeu.protheus_lexicon_backend.entity.TableEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.QuestionEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.TableEntity;
 import com.philipepompeu.protheus_lexicon_backend.service.QuestionService;
 
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
@@ -26,7 +26,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         description = "Consulta o SX1 do Protheus")
 public class QuestionController {
 
-    @Autowired
     private final QuestionService service;
 
     public QuestionController(QuestionService service) {

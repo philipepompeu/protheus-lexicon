@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.QuestionEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.QuestionEntity;
 
 public interface QuestionRepository extends JpaRepository<QuestionEntity, String>{
 

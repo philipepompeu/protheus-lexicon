@@ -1,4 +1,5 @@
-package com.philipepompeu.protheus_lexicon_backend.entity;
+package com.philipepompeu.protheus_lexicon_backend.domain;
+
 import java.math.BigInteger;
 
 import org.hibernate.annotations.Immutable;
@@ -14,33 +15,27 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "SX7T10")
+@Table(name = "SIXT10")
 @SQLRestriction("D_E_L_E_T_ = ' '")
 @Immutable
 @Getter
 @Setter
-public class TriggerEntity {
+public class IndexEntity {
     @Id
     @Column(name = "R_E_C_N_O_")
     private BigInteger id;
 
-    @Column(name = "X7_SEQUENC")
+    @Column(name = "ORDEM")
     private String sequence;
     
-    @Column(name = "X7_CDOMIN")
-    private String updatedField;
+    @Column(name = "CHAVE")
+    private String key;
     
-    @Column(name = "X7_CONDIC")
-    private String executionCondition;
-    
-    @Column(name = "X7_REGRA")
-    private String instructionToBeExecuted;
-    
-    @Column(name = "X7_PROPRI")
-    private String owner;
+    @Column(name = "DESCRICAO")
+    private String description;
 
     @ManyToOne
-    @JoinColumn(name = "X7_CAMPO", referencedColumnName = "X3_CAMPO")
-    private FieldEntity field;
+    @JoinColumn(name = "INDICE", referencedColumnName = "X2_CHAVE")
+    private TableEntity table;
     
 }

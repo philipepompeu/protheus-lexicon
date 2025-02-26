@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.ParameterEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.ParameterEntity;
 
 public interface ParameterRepository extends JpaRepository<ParameterEntity, BigInteger>{
 

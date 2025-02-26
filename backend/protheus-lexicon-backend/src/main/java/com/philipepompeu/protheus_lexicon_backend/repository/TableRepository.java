@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.TableEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.TableEntity;
 
 public interface TableRepository extends JpaRepository<TableEntity, String>{
 

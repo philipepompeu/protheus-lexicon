@@ -1,4 +1,4 @@
-package com.philipepompeu.protheus_lexicon_backend.entity;
+package com.philipepompeu.protheus_lexicon_backend.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

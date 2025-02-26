@@ -7,3 +7,4 @@ pg_restore --no-owner --no-privileges --table=sx3t10 --table=sx2t10 --table=sx6t
 
 
 #INSERT INTO application.users (username, password) VALUES ('admin', '$2a$10$XqvP1xU6dJGGdWq0XWQsW.KqpyPM4eVq5opikbfaAbGxVBRmvCCtu');
+#sudo docker-compose -f docker-compose.aws.yml up -d --build

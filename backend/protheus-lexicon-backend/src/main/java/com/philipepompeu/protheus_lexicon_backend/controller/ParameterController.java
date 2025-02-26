@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.ParameterEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.ParameterEntity;
 import com.philipepompeu.protheus_lexicon_backend.service.ParameterService;
 
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
@@ -26,7 +26,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         externalDocs = @ExternalDocumentation( description="SX6 - Parâmetros do Sistema", url="https://tdn.totvs.com/pages/releaseview.action?pageId=22479590"))
 public class ParameterController {
 
-    @Autowired
     private final ParameterService service;
 
     public ParameterController(ParameterService service) {

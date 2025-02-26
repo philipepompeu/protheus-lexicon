@@ -21,7 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.TableEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.TableEntity;
 import com.philipepompeu.protheus_lexicon_backend.repository.TableRepository;
 
 @SpringBootTest

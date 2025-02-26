@@ -2,7 +2,7 @@ package com.philipepompeu.protheus_lexicon_backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.philipepompeu.protheus_lexicon_backend.entity.TriggerEntity;
+import com.philipepompeu.protheus_lexicon_backend.domain.TriggerEntity;
 import com.philipepompeu.protheus_lexicon_backend.service.TriggerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
