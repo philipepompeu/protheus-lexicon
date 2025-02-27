@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.philipepompeu.protheus_lexicon_backend.DTO.AuthRequest;
 import com.philipepompeu.protheus_lexicon_backend.DTO.AuthResponse;
+import com.philipepompeu.protheus_lexicon_backend.DTO.TokenDto;
 import com.philipepompeu.protheus_lexicon_backend.service.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -63,4 +64,10 @@ public class AuthController {
         
     }
     
+    public ResponseEntity<String> validToken(@RequestBody TokenDto token){
+
+        
+
+        return ResponseEntity.ok().build();
+    }
 }

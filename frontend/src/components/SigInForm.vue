@@ -1,12 +1,12 @@
 <template>
     <v-container class="login-container">
       <v-card class="pa-6 d-flex justify-center align-center h-screen" max-width="500" width="100%" elevation="4">
-        <v-card-title class="justify-center align-center position-relative">Login</v-card-title>
+        <v-card-title>Cadastrar usu·rio</v-card-title>
         <v-card-text>
           <v-form @submit.prevent="login">
             <v-text-field
               v-model="username"
-              label="Usu√°rio"
+              label="Usu·rio"
               required
             ></v-text-field>
   
@@ -16,15 +16,17 @@
               type="password"
               required
             ></v-text-field>
+            
+            <v-text-field
+              v-model="passwordValidation"
+              label="Confirme a senha"
+              type="password"
+              required
+            ></v-text-field>
   
-            <v-btn type="submit" color="primary" block prepend-icon="mdi-login" size="large">Entrar</v-btn>
-            <v-btn type="" variant="plain" color="secundary" block>Cadastrar</v-btn>
+            <v-btn type="submit" color="primary" block prepend-icon="mdi-login">Cadastrar</v-btn>
           </v-form>
-        </v-card-text>
-        <v-card-text>
-          <v-alert v-if="errorMessage" type="error" variant="elevated" closable>{{ errorMessage }}</v-alert>
-        </v-card-text>
-        
+        </v-card-text>        
       </v-card>
     </v-container>
   </template>
@@ -47,11 +49,11 @@
     },
     methods: {
       async login() {
-        const token = await AuthService.login(this.username, this.password);
+        const token = await AuthService.signIn(this.username, this.password);
         if (token) {
           this.router.push('/'); // Redireciona para a tela inicial
         } else {
-          this.errorMessage = 'Usu√°rio ou senha incorretos!';
+          this.errorMessage = 'Usu·rio ou senha incorretos!';
         }
       }
     }

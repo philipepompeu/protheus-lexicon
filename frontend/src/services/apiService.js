@@ -24,12 +24,27 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  return response;
+}, function (error) {
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  if (error.response && error.response.status == 401) {
+    AuthService.logout();
+  }
+  return Promise.reject(error);
+});
+
 // Interceptor para capturar erros e tratar quando a API estiver offline
 api.interceptors.response.use(
   response => response,
   error => {
     console.log(error);
     apiError.value = 'Erro ao conectar à API. Verifique se o servidor está online.';
+    
     return Promise.resolve(null); // Retorna null ao invés de propagar erro
   }
 );

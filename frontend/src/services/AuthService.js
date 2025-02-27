@@ -15,6 +15,21 @@ const AuthService = {
       return null;
     }
   },
+  
+  async signIn(username, password) {
+    try {
+      const response = await api.post('/auth/register', { username, password });
+      
+      if (response && response.data.token) {
+        localStorage.setItem('jwt_token', response.data.token); // Armazena o token
+        return response.data.token;
+      }
+      return null;
+    } catch (error) {
+      console.error('Erro ao autenticar:', error);
+      return null;
+    }
+  },
 
   logout() {
     localStorage.removeItem('jwt_token'); // Remove o token ao fazer logout

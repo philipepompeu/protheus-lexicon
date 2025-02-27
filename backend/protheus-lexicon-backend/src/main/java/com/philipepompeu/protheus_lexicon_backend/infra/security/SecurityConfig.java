@@ -82,7 +82,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("http://*");
-        configuration.setAllowedOrigins(List.of(allowedCorsOrigin)); // Permite o frontend Vue
+        configuration.setAllowedOrigins(List.of(allowedCorsOrigin,"http://localhost:8080")); // Permite o frontend Vue
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);

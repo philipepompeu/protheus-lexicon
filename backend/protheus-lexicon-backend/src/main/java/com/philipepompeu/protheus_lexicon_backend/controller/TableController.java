@@ -1,6 +1,9 @@
 package com.philipepompeu.protheus_lexicon_backend.controller;
 
+import java.util.List;
 import java.util.Optional;
+
+import javax.naming.NameNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.philipepompeu.protheus_lexicon_backend.DTO.TableDto;
+import com.philipepompeu.protheus_lexicon_backend.domain.FieldEntity;
 import com.philipepompeu.protheus_lexicon_backend.domain.TableEntity;
+import com.philipepompeu.protheus_lexicon_backend.service.FieldService;
+import com.philipepompeu.protheus_lexicon_backend.service.TableReportService;
 import com.philipepompeu.protheus_lexicon_backend.service.TableService;
 
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
@@ -32,10 +38,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         externalDocs = @ExternalDocumentation( description="SX2 - Tabelas de Dados", url="https://tdn.totvs.com/display/public/framework/SX2+-+Tabelas+de+Dados"))
 public class TableController {
 
-    private final TableService service;
+    private final TableService service;    
+    private final TableReportService tableReportService;
 
-    public TableController(TableService service) {
+    public TableController(TableService service, TableReportService tableReportService) {
         this.service = service;
+        this.tableReportService = tableReportService;
     }
 
    @GetMapping
@@ -59,5 +67,16 @@ public class TableController {
         }else{
             return ResponseEntity.notFound().build();
         }
+    }
+    
+    @GetMapping("/{tableId}/pdf")
+    @Operation(summary = "Obtêm os dados de uma única tabela do SX2")
+    public ResponseEntity<String> tableToPdf(@PathVariable String tableId) throws NameNotFoundException {
+        
+        TableDto table = service.getTableById(tableId).orElseThrow(()-> new NameNotFoundException());
+        
+        this.tableReportService.printReport(table);       
+
+        return ResponseEntity.ok().build();
     }
 }
