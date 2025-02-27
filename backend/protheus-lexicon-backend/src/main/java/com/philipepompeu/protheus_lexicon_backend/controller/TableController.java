@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.philipepompeu.protheus_lexicon_backend.DTO.TableDto;
 import com.philipepompeu.protheus_lexicon_backend.domain.TableEntity;
 import com.philipepompeu.protheus_lexicon_backend.service.TableService;
 
@@ -39,19 +40,19 @@ public class TableController {
 
    @GetMapping
    @Operation(summary = "Lista todas as tabelas do SX2 do Protheus")
-    public ResponseEntity<Page<TableEntity>> getTables(
+    public ResponseEntity<Page<TableDto>> getTables(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(required = false) String id
     ) {
-        Page<TableEntity> tables = service.getTables(page, size, id);
+        Page<TableDto> tables = service.getTables(page, size, id);
         return ResponseEntity.ok(tables);
     }
 
     @GetMapping("/{tableId}")
     @Operation(summary = "Obtêm os dados de uma única tabela do SX2")
-    public ResponseEntity<TableEntity> getTableById(@PathVariable String tableId) {
-        Optional<TableEntity> table = service.getTableById(tableId);
+    public ResponseEntity<TableDto> getTableById(@PathVariable String tableId) {
+        Optional<TableDto> table = service.getTableById(tableId);
         
         if (table.isPresent()) {
             return ResponseEntity.ok(table.get());

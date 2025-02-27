@@ -10,32 +10,37 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.philipepompeu.protheus_lexicon_backend.domain.TableEntity;
+import com.philipepompeu.protheus_lexicon_backend.DTO.TableDto;
+import com.philipepompeu.protheus_lexicon_backend.DTO.TableMapper;
 import com.philipepompeu.protheus_lexicon_backend.repository.TableRepository;
 
 @Service
 public class TableService {
 
     private final TableRepository repository;
+    
+    private final TableMapper mapper = new TableMapper();
 
     public TableService(TableRepository repository) {
-        this.repository = repository;
+        this.repository = repository;        
     }
 
-    public List<TableEntity> getAllTables() {
-        return repository.findAll();
+    public List<TableDto> getAllTables() {
+        return  repository.findAll().stream()      
+                .map(mapper::entityToDto)
+                .toList();
     }
 
-    public Page<TableEntity> getTables(int page, int size, String id) {
+    public Page<TableDto> getTables(int page, int size, String id) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         
         if (id != null && !id.isEmpty()) {
-            return repository.findByIdContainingIgnoreCase(id, pageable);
+            return repository.findByIdContainingIgnoreCase(id, pageable).map(mapper::entityToDto);
         }
-        return repository.findAllByOrderById(pageable);
+        return repository.findAllByOrderById(pageable).map(mapper::entityToDto);
     }
 
-    public Optional<TableEntity> getTableById(String tableId) {
-        return repository.findById(tableId);
+    public Optional<TableDto> getTableById(String tableId) {
+        return repository.findById(tableId).map(mapper::entityToDto);
     }
 }
