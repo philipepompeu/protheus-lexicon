@@ -6,11 +6,23 @@
         <v-card-text>
           <p><strong>Chave Primária:</strong> {{ table.primaryKey }}</p>
         </v-card-text>
-        <v-card-actions>
+        <v-card-actions v-if="!pdfUrl">
           <v-btn color="primary" @click="downloadPdf( table.id )" :loading="loading">
             <v-icon left>mdi-download</v-icon> Baixar PDF
           </v-btn>
         </v-card-actions>
+
+       
+
+        <!-- Exibe um link para abrir o PDF após o primeiro download -->
+        <v-card-text v-if="pdfUrl">
+          <v-alert type="success" class="mt-4">
+            <v-icon left>mdi-file</v-icon>
+            <a :href="pdfUrl" target="_blank" rel="noopener noreferrer">
+              Abrir PDF: {{ fileName }}
+            </a>
+          </v-alert>
+        </v-card-text>
         
         <!-- v-tabs para alternar entre as abas -->
         <v-tabs v-model="activeTab" >
@@ -59,18 +71,23 @@
   
       return { table, activeTab };
     },
+    data(){
+      return{
+        pdfUrl: null,
+        fileName: null
+      }
+    },
     methods:{
       async downloadPdf(tableId){
 
         //this.loading = true;
         try {
           const { fileName, url } = await tableService.getTablePdf(tableId);
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', fileName);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          
+          this.pdfUrl = url; // Salva o link do PDF
+          this.fileName = fileName;
+          window.open(url, '_blank'); // Abre em uma nova aba
+
         } catch (err) {
           //this.error = "Erro ao baixar o PDF.";
         } finally {
