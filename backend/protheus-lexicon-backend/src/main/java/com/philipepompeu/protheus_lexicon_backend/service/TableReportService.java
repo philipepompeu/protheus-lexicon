@@ -1,5 +1,6 @@
 package com.philipepompeu.protheus_lexicon_backend.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -22,9 +23,11 @@ public class TableReportService {
     private static final Logger logger = LoggerFactory.getLogger(TableReportService.class);
     
     private final FieldService fieldService;
+    private final S3Service s3Service;
 
-    public TableReportService(FieldService fieldService){
+    public TableReportService(FieldService fieldService, S3Service s3Service){
         this.fieldService = fieldService;
+        this.s3Service = s3Service;
     }
 
 
@@ -94,7 +97,13 @@ public class TableReportService {
             }            
 
             contentStream.close();
-            document.save(filePath);            
+            document.save(filePath); 
+            
+            File pdfFile = new File(filePath);
+            
+            s3Service.uploadFile(pdfFile);
+
+            pdfFile.delete();
 
             logger.info("PDF gerado com sucesso: " + filePath);
 

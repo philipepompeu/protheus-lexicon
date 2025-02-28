@@ -13,6 +13,16 @@
 			"extendFeatures": {
 				"charDetails": false
 			}
+		},
+		{
+			"type": "java",
+			"name": "Spring Boot-ProtheusLexiconBackendApplication<protheus-lexicon-backend>",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"mainClass": "com.philipepompeu.protheus_lexicon_backend.ProtheusLexiconBackendApplication",
+			"projectName": "protheus-lexicon-backend",
+			"args": "",
+			"envFile": "${workspaceFolder}/.env"
 		}
 	]
 }
