@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.philipepompeu.protheus_lexicon_backend.DTO.DownloadFile;
 import com.philipepompeu.protheus_lexicon_backend.DTO.TableDto;
 import com.philipepompeu.protheus_lexicon_backend.domain.FieldEntity;
 
@@ -31,7 +32,7 @@ public class TableReportService {
     }
 
 
-    public String printReport(TableDto table){
+    public DownloadFile printReport(TableDto table){
         List<FieldEntity> fields = fieldService.getFieldsByTableId(table.getId());
         
         String filePath = String.format("tabela-%s-%s.pdf", table.getId(), UUID.randomUUID().toString());
@@ -98,21 +99,24 @@ public class TableReportService {
 
             contentStream.close();
             document.save(filePath); 
+
+            DownloadFile fileS3 = new DownloadFile(filePath, filePath);
             
             File pdfFile = new File(filePath);
             
-            s3Service.uploadFile(pdfFile);
+            String s3FileKey = s3Service.uploadFile(pdfFile);
+            String url = s3Service.generatePresignedUrl(s3FileKey);
 
             pdfFile.delete();
 
             logger.info("PDF gerado com sucesso: " + filePath);
 
-            return filePath;
+            return new DownloadFile(filePath, url);
         } catch (IOException e) {
             logger.error("Falha na geração do pdf.", e);
         }
         
-        return "";      
+        return null;
 
     }
     

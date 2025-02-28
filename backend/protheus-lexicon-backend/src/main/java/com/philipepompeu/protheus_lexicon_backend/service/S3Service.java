@@ -1,6 +1,7 @@
 package com.philipepompeu.protheus_lexicon_backend.service;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,10 @@ import lombok.Setter;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.core.sync.RequestBody;
 
 
@@ -21,7 +25,7 @@ import software.amazon.awssdk.core.sync.RequestBody;
 public class S3Service {
 
     //@Value("${aws.s3.bucket}")
-    //private String bucketName;
+    private final String bucketName = "protheus-lexicon";
 
     private final S3Client s3Client;
 
@@ -38,7 +42,7 @@ public class S3Service {
 
         s3Client.putObject(
                 PutObjectRequest.builder()
-                        .bucket("protheus-lexicon")
+                        .bucket(this.bucketName)
                         .key(s3Key)
                         .contentType("application/pdf")
                         .build(),
@@ -47,4 +51,27 @@ public class S3Service {
 
         return s3Key;
     }
+
+    public String generatePresignedUrl(String s3Key) {
+
+        
+        try (S3Presigner presigner = S3Presigner.builder()
+                                                .region(Region.SA_EAST_1)
+                                                .build()
+        ) {
+            
+            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                    .bucket(this.bucketName)
+                    .key(s3Key)
+                    .build();
+    
+            GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
+                    .signatureDuration(Duration.ofHours(1)) // Expira em 1 hora
+                    .getObjectRequest(getObjectRequest)
+                    .build();
+    
+            return presigner.presignGetObject(presignRequest).url().toString();
+        }
+    }
+
 }

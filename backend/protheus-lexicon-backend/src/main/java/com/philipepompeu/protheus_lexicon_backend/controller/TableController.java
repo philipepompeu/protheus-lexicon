@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.philipepompeu.protheus_lexicon_backend.DTO.DownloadFile;
 import com.philipepompeu.protheus_lexicon_backend.DTO.TableDto;
 import com.philipepompeu.protheus_lexicon_backend.domain.FieldEntity;
 import com.philipepompeu.protheus_lexicon_backend.domain.TableEntity;
@@ -71,12 +72,10 @@ public class TableController {
     
     @GetMapping("/{tableId}/pdf")
     @Operation(summary = "Obtêm os dados de uma única tabela do SX2")
-    public ResponseEntity<String> tableToPdf(@PathVariable String tableId) throws NameNotFoundException {
+    public ResponseEntity<DownloadFile> tableToPdf(@PathVariable String tableId) throws NameNotFoundException {
         
         TableDto table = service.getTableById(tableId).orElseThrow(()-> new NameNotFoundException());
         
-        this.tableReportService.printReport(table);       
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(this.tableReportService.printReport(table));
     }
 }
