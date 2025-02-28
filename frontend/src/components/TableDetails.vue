@@ -6,6 +6,11 @@
         <v-card-text>
           <p><strong>Chave Primária:</strong> {{ table.primaryKey }}</p>
         </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" @click="downloadPdf( table.id )" :loading="loading">
+            <v-icon left>mdi-download</v-icon> Baixar PDF
+          </v-btn>
+        </v-card-actions>
         
         <!-- v-tabs para alternar entre as abas -->
         <v-tabs v-model="activeTab" >
@@ -53,6 +58,25 @@
       });
   
       return { table, activeTab };
+    },
+    methods:{
+      async downloadPdf(tableId){
+
+        //this.loading = true;
+        try {
+          const { fileName, url } = await tableService.getTablePdf(tableId);
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', fileName);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } catch (err) {
+          //this.error = "Erro ao baixar o PDF.";
+        } finally {
+         // this.loading = false;
+        }
+      }
     }
   };
   </script>

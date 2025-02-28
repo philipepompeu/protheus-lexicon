@@ -1,10 +1,8 @@
-package com.philipepompeu.protheus_lexicon_backend.service;
+package com.philipepompeu.protheus_lexicon_backend.cloud;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import lombok.Getter;
@@ -12,6 +10,7 @@ import lombok.Setter;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
@@ -22,9 +21,8 @@ import software.amazon.awssdk.core.sync.RequestBody;
 @Service
 @Getter
 @Setter
-public class S3Service {
-
-    //@Value("${aws.s3.bucket}")
+public class S3Service implements StorageService {
+    
     private final String bucketName = "protheus-lexicon";
 
     private final S3Client s3Client;
@@ -52,7 +50,7 @@ public class S3Service {
         return s3Key;
     }
 
-    public String generatePresignedUrl(String s3Key) {
+    public String generateUrl(String s3Key) {
 
         
         try (S3Presigner presigner = S3Presigner.builder()
@@ -72,6 +70,15 @@ public class S3Service {
     
             return presigner.presignGetObject(presignRequest).url().toString();
         }
+    }
+
+    @Override
+    public void deleteFile(String fileId) {     
+        
+        s3Client.deleteObject(DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileId)
+                .build());
     }
 
 }

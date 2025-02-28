@@ -19,6 +19,11 @@ const tableService = {
   async getTableIndexes(tableId){
     const response = await api.get(`tables/${tableId}/indexes`);
     return response.data;
+  },
+  
+  async getTablePdf(tableId){
+    const response = await api.get(`tables/${tableId}/pdf`);
+    return response.data;
   }
 };
 

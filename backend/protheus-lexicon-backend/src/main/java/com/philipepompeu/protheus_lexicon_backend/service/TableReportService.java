@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import com.philipepompeu.protheus_lexicon_backend.DTO.DownloadFile;
 import com.philipepompeu.protheus_lexicon_backend.DTO.TableDto;
+import com.philipepompeu.protheus_lexicon_backend.cloud.StorageService;
+import com.philipepompeu.protheus_lexicon_backend.cloud.StorageServiceFactory;
 import com.philipepompeu.protheus_lexicon_backend.domain.FieldEntity;
 
 @Service
@@ -24,11 +26,13 @@ public class TableReportService {
     private static final Logger logger = LoggerFactory.getLogger(TableReportService.class);
     
     private final FieldService fieldService;
-    private final S3Service s3Service;
+    private final StorageService storageService;
 
-    public TableReportService(FieldService fieldService, S3Service s3Service){
+    public TableReportService(FieldService fieldService, StorageServiceFactory storageFactory){
         this.fieldService = fieldService;
-        this.s3Service = s3Service;
+        this.storageService = storageFactory.getStorageService();
+        
+        System.out.println("Tipo do Serviço de Storage->"+storageService.getClass().getName());        
     }
 
 
@@ -98,21 +102,19 @@ public class TableReportService {
             }            
 
             contentStream.close();
-            document.save(filePath); 
-
-            DownloadFile fileS3 = new DownloadFile(filePath, filePath);
+            document.save(filePath);             
             
             File pdfFile = new File(filePath);
             
-            String s3FileKey = s3Service.uploadFile(pdfFile);
-            String url = s3Service.generatePresignedUrl(s3FileKey);
+            String s3FileKey = storageService.uploadFile(pdfFile);
+            String url = storageService.generateUrl(s3FileKey);
 
             pdfFile.delete();
 
             logger.info("PDF gerado com sucesso: " + filePath);
 
             return new DownloadFile(filePath, url);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("Falha na geração do pdf.", e);
         }
         

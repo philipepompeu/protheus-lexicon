@@ -16,6 +16,6 @@ public class AuthRequest/*(String username, String password)*/ {
     @Schema(description = "Nome de usuário", example = "admin")
     private String username;
 
-    @Schema(description = "Senha do usuário", example = "123456")
+    @Schema(description = "Senha do usuário", example = "123457")
     private String password;    
 }
