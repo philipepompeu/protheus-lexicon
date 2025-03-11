@@ -31,8 +31,9 @@ public class TableReportService {
     public TableReportService(FieldService fieldService, StorageServiceFactory storageFactory){
         this.fieldService = fieldService;
         this.storageService = storageFactory.getStorageService();
+
+        TableReportService.logger.debug(String.format("StorageService[ %s ]", storageService.getClass().getName()));       
         
-        System.out.println("Tipo do Serviço de Storage->"+storageService.getClass().getName());        
     }
 
 

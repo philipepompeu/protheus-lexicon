@@ -15,7 +15,7 @@ import com.philipepompeu.protheus_lexicon_backend.DTO.TokenDto;
 import com.philipepompeu.protheus_lexicon_backend.service.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
-
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -29,7 +29,9 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Realiza a autenticação do usuário")
-    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest request) {                
+    @ApiResponse(responseCode = "401", description = "Usuário inválido.")
+    @ApiResponse(responseCode = "200", description = "Usuário autenticado.")
+    public ResponseEntity<AuthResponse> authenticate(@RequestBody @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do usuário para login") AuthRequest request) {                
         
         logger.debug("Tentativa de autenticação para usuário:{}", request.getUsername());                                            
                                             

@@ -1,13 +1,17 @@
 package com.philipepompeu.protheus_lexicon_backend.cloud;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class StorageServiceFactory {
 
-    private final S3Service s3StorageService;
-    private final GCPService googleBlobService;
+    private static final Logger logger = LoggerFactory.getLogger(StorageServiceFactory.class);
+
+    private final S3Service s3StorageService; //AWS
+    private final GCPService googleBlobService;//Google Cloud PLatform
 
     @Autowired
     public StorageServiceFactory(S3Service s3Service, GCPService gcpService){
@@ -17,9 +21,12 @@ public class StorageServiceFactory {
     }
 
     public StorageService getStorageService(){
-        //return this.s3StorageService;
-        System.out.println("Deveria retornar um GCPService");
-        return this.googleBlobService;
+
+        StorageService service = this.googleBlobService;        
+        
+        logger.info(String.format("CloudStorage selected [ %s ]", service.getClass().getName()));
+
+        return service;
     }
 
 }

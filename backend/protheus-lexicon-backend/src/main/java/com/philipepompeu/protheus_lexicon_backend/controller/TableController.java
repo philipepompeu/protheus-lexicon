@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.philipepompeu.protheus_lexicon_backend.DTO.DownloadFile;
 import com.philipepompeu.protheus_lexicon_backend.DTO.TableDto;
-import com.philipepompeu.protheus_lexicon_backend.domain.FieldEntity;
-import com.philipepompeu.protheus_lexicon_backend.domain.TableEntity;
-import com.philipepompeu.protheus_lexicon_backend.service.FieldService;
 import com.philipepompeu.protheus_lexicon_backend.service.TableReportService;
 import com.philipepompeu.protheus_lexicon_backend.service.TableService;
 
