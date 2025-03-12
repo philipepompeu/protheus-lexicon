@@ -22,7 +22,7 @@ public class StorageServiceFactory {
 
     public StorageService getStorageService(){
 
-        StorageService service = this.googleBlobService;        
+        StorageService service = this.s3StorageService;        
         
         logger.info(String.format("CloudStorage selected [ %s ]", service.getClass().getName()));
 
