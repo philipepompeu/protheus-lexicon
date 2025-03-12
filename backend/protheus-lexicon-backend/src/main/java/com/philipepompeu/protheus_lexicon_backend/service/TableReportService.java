@@ -10,8 +10,10 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.philipepompeu.protheus_lexicon_backend.DTO.DownloadFile;
@@ -37,6 +39,7 @@ public class TableReportService {
     }
 
 
+    @Cacheable(value="printReport", key="#table.id" , unless="#result == null")
     public DownloadFile printReport(TableDto table){
         List<FieldEntity> fields = fieldService.getFieldsByTableId(table.getId());
         

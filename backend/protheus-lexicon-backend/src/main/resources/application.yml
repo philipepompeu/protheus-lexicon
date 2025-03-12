@@ -14,4 +14,8 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    default-schema: application
+    default-schema: application  
+  cache:
+    type: caffeine
+  caffeine:
+    spec: expireAfterWrite=1h
