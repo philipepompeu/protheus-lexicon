@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: dev # Define o perfil padrão como 'dev'
+  datasource:
+    url: jdbc:postgresql://localhost:5432/protheuslexicon
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 123
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    default-schema: application  
+  cache:
+    type: caffeine
+  caffeine:
+    spec: expireAfterWrite=1h

@@ -1,0 +1,121 @@
+name: CI - Build e Testes Automatizados
+
+on:
+  push:
+    branches:
+      - main  # Roda a pipeline sempre que houver commit na branch main
+      - develop  # Também pode rodar na develop (se quiser)
+  pull_request:
+    branches:
+      - main  # Roda nos PRs para a main
+jobs:
+  backend-build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      
+      - name: Instalar Docker Compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
+
+      - name: Subir containers com Docker Compose
+        run: docker-compose -f backend/protheus-lexicon-backend/docker-compose.yml up -d
+
+      - name: Aguardar PostgreSQL iniciar
+        run: sleep 15
+
+      - name: Testar conexão com PostgreSQL
+        run: |
+          pg_isready -h localhost -p 5432 -U admin
+
+      - name: Instalar dependências
+        working-directory: backend/protheus-lexicon-backend
+        run: mvn install --no-transfer-progress --quiet -Dspring.profiles.active=ci
+    
+      - name: Rodar testes automatizados
+        working-directory: backend/protheus-lexicon-backend
+        run: mvn test -Dspring.profiles.active=ci
+  publish-backend-image-to-dockerhub:
+    needs: backend-build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      - name: Instalar dependências
+        working-directory: backend/protheus-lexicon-backend
+        run: mvn clean install -DskipTests
+      - name: Login DockerHub
+        run: docker login -u ${{secrets.docker_hub_username}} -p ${{secrets.docker_hub_pwd}}
+      - name: Build imagem
+        working-directory: backend/protheus-lexicon-backend
+        run: docker build . -t philipepompeu/protheus-lexicon-backend
+      - name: Publica imagem para DockerHub
+        working-directory: backend/protheus-lexicon-backend
+        run: docker push philipepompeu/protheus-lexicon-backend
+  deploy-backend-to-aws:
+    needs: publish-backend-image-to-dockerhub
+    runs-on: self-hosted
+
+    services:
+      db:
+        image: postgres:15        
+        env:
+          POSTGRES_DB: protheuslexicon
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+        ports:
+          - "5432:5432"
+        volumes:
+          - pgdata:/var/lib/postgresql/data
+
+    steps:
+      - name: pull backend image from dockerhub
+        run: docker pull philipepompeu/protheus-lexicon-backend:latest
+      - name: run backend image
+        run: docker run -d -p 8080:8080 --name protheus-lexicon-backend philipepompeu/protheus-lexicon-backend:latest  
+        env:
+            # The hostname used to communicate with the PostgreSQL service container
+            POSTGRES_HOST: postgres
+            # The default PostgreSQL port
+            POSTGRES_PORT: 5432
+            SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/protheuslexicon
+            SPRING_DATASOURCE_USERNAME: admin
+            SPRING_DATASOURCE_PASSWORD: admin
+            CORS_ALLOWED_ORIGIN: http://localhost
+
+  frontend-build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Executar testes com Jest
+        run: npm run test:unit

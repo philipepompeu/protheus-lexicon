@@ -1,0 +1,38 @@
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:15
+    container_name: protheus-db
+    restart: always
+    environment:
+      POSTGRES_DB: protheuslexicon
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.aws
+    container_name: protheus-app
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/protheuslexicon
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+      CORS_ALLOWED_ORIGIN: http://localhost
+    ports:
+      - "80:80"   # Frontend (Nginx)
+      - "8080:8080" # Backend (Spring Boot)
+    networks:
+      - app-network
+
+volumes:
+  pgdata:

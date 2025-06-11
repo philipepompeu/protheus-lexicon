@@ -1,0 +1,73 @@
+x-backend-conf: &api-config
+  build:
+    context: ./backend/protheus-lexicon-backend
+    dockerfile: Dockerfile  
+  depends_on:
+    - db
+  environment:
+    SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/protheuslexicon
+    SPRING_DATASOURCE_USERNAME: admin
+    SPRING_DATASOURCE_PASSWORD: admin
+    CORS_ALLOWED_ORIGIN: http://localhost
+  networks:
+    - backend-net
+    - frontend-net  
+  expose:
+    - "8080"
+
+networks:
+  backend-net:
+    driver: bridge
+  frontend-net:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:15
+    container_name: protheus-db
+    restart: always
+    environment:
+      POSTGRES_DB: protheuslexicon
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend-net
+
+  backend-1:
+    <<: *api-config
+    container_name: lexicon-api1
+  backend-2:
+    <<: *api-config
+    container_name: lexicon-api2
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: protheus-frontend
+    environment:
+#      VUE_APP_API_URL: http://backend:8080/api  # URL interna do Docker
+      VUE_APP_API_URL: /api  # URL interna do Docker
+    networks:
+      - frontend-net
+    expose:
+      - "80"
+
+  nginx:
+    image: nginx:latest
+    container_name: protheus-nginx
+    depends_on:
+      - frontend
+      - backend-1
+      - backend-2
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - frontend-net
+
+volumes:
+  pgdata:
